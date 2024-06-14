@@ -122,7 +122,7 @@ public class SkylandChunkGenerator extends ChunkGenerator {
                 set.add(levelChunkSection);
             }
 
-            return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("wgen_fill_noise", () -> this.doFill(blender, structureManager, random, chunk, j, k)), Util.backgroundExecutor()).whenCompleteAsync((chunkAccess, throwable) -> {
+            return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("wgen_fill_noise", () -> chunk), Util.backgroundExecutor()).whenCompleteAsync((chunkAccess, throwable) -> {
 
                 for (LevelChunkSection levelChunkSection : set) {
                     levelChunkSection.release();
@@ -130,81 +130,6 @@ public class SkylandChunkGenerator extends ChunkGenerator {
 
             }, executor);
         }
-    }
-
-    private ChunkAccess doFill(Blender blender, StructureManager structureManager, RandomState random, ChunkAccess chunk, int minCellY, int cellCountY) {
-        NoiseChunk noiseChunk = chunk.getOrCreateNoiseChunk((chunkAccess) -> this.createNoiseChunk(chunkAccess, structureManager, blender, random));
-        Heightmap heightmap = chunk.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
-        Heightmap heightmap2 = chunk.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
-        ChunkPos chunkPos = chunk.getPos();
-        int i = chunkPos.getMinBlockX();
-        int j = chunkPos.getMinBlockZ();
-        Aquifer aquifer = noiseChunk.aquifer();
-        noiseChunk.initializeForFirstCellX();
-        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        int k = ((NoiseChunkAccessor) noiseChunk).getCellWidth();
-        int l = ((NoiseChunkAccessor) noiseChunk).getCellHeight();
-        int m = 16 / k;
-        int n = 16 / k;
-
-        for (int o = 0; o < m; ++o) {
-            noiseChunk.advanceCellX(o);
-
-            for (int p = 0; p < n; ++p) {
-                int q = chunk.getSectionsCount() - 1;
-                LevelChunkSection levelChunkSection = chunk.getSection(q);
-
-                for (int r = cellCountY - 1; r >= 0; --r) {
-                    noiseChunk.selectCellYZ(r, p);
-
-                    for (int s = l - 1; s >= 0; --s) {
-                        int t = (minCellY + r) * l + s;
-                        int u = t & 15;
-                        int v = chunk.getSectionIndex(t);
-                        if (q != v) {
-                            q = v;
-                            levelChunkSection = chunk.getSection(v);
-                        }
-
-                        double d = (double) s / (double) l;
-                        noiseChunk.updateForY(t, d);
-
-                        for (int w = 0; w < k; ++w) {
-                            int x = i + o * k + w;
-                            int y = x & 15;
-                            double e = (double) w / (double) k;
-                            noiseChunk.updateForX(x, e);
-
-                            for (int z = 0; z < k; ++z) {
-                                int aa = j + p * k + z;
-                                int ab = aa & 15;
-                                double f = (double) z / (double) k;
-                                noiseChunk.updateForZ(aa, f);
-                                BlockState blockState = ((NoiseChunkAccessor) noiseChunk).invokeGetInterpolatedState();
-                                if (blockState == null) {
-                                    blockState = this.settings.value().defaultBlock();
-                                }
-
-                                if (blockState != AIR && !SharedConstants.debugVoidTerrain(chunk.getPos())) {
-//                                    levelChunkSection.setBlockState(y, u, ab, blockState, false);
-//                                    heightmap.update(y, t, ab, blockState);
-//                                    heightmap2.update(y, t, ab, blockState);
-//                                    if (aquifer.shouldScheduleFluidUpdate() && !blockState.getFluidState().isEmpty()) {
-//                                        mutableBlockPos.set(x, t, aa);
-//                                        chunk.markPosForPostprocessing(mutableBlockPos);
-//                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            noiseChunk.swapSlices();
-        }
-
-        noiseChunk.stopInterpolation();
-        return chunk;
     }
 
     @Override
