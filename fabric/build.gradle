@@ -15,6 +15,24 @@ configurations {
     developmentFabric.extendsFrom common
 }
 
+repositories {
+    maven {
+        name 'Terraformers'
+        url 'https://maven.terraformersmc.com/'
+    }
+    maven {
+        name 'Masa'
+        url 'https://masa.dy.fi/maven'
+    }
+    maven {
+        name 'CurseForge'
+        url 'https://cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
+    }
+}
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
@@ -23,6 +41,12 @@ dependencies {
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+    modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
+
+    modImplementation "fi.dy.masa.malilib:malilib-fabric-${rootProject.minecraft_version}:0.16.2"
+    modImplementation "curse.maven:minihud-244260:4593082"
+
 }
 
 processResources {

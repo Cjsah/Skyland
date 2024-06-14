@@ -9,7 +9,7 @@
   "contact": {},
 
   "license": "GNU LGPL 3.0",
-  "icon": "icon.png",
+  "icon": "assets/skyland/textures/icon.png",
 
   "environment": "*",
   "entrypoints": {

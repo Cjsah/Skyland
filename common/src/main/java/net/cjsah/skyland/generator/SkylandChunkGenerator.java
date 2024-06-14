@@ -32,14 +32,11 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.NoiseSettings;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-import java.util.function.Predicate;
 
 public class SkylandChunkGenerator extends ChunkGenerator {
     public static final Codec<SkylandChunkGenerator> CODEC = RecordCodecBuilder.create(instance ->
@@ -101,56 +98,10 @@ public class SkylandChunkGenerator extends ChunkGenerator {
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState random) {
         return level.getMinBuildHeight();
-//        return this.iterateNoiseColumn(level, random, x, z, type.isOpaque()).orElse(level.getMinBuildHeight());
     }
 
     @Override
     public void addDebugScreenInfo(List<String> info, RandomState random, BlockPos pos) {}
-
-//    private OptionalInt iterateNoiseColumn(LevelHeightAccessor level, RandomState random, int x, int z, @Nullable Predicate<BlockState> stoppingState) {
-//        NoiseSettings noiseSettings = this.settings.value().noiseSettings().clampToHeightAccessor(level);
-//        int cellHeight = noiseSettings.getCellHeight();
-//        int minY = noiseSettings.minY();
-//        int underChunks = Mth.floorDiv(minY, cellHeight);
-//        int upperChunks = Mth.floorDiv(noiseSettings.height(), cellHeight);
-//        if (upperChunks > 0) {
-//
-//            int cellWidth = noiseSettings.getCellWidth();
-//            int xChunks = Math.floorDiv(x, cellWidth);
-//            int zChunks = Math.floorDiv(z, cellWidth);
-//            int xInChunk = Math.floorMod(x, cellWidth);
-//            int zInChunk = Math.floorMod(z, cellWidth);
-//            int xChunkStart = xChunks * cellWidth;
-//            int zChunkStart = zChunks * cellWidth;
-//            double d = (double) xInChunk / (double) cellWidth;
-//            double e = (double) zInChunk / (double) cellWidth;
-//            NoiseChunk noiseChunk = new NoiseChunk(1, random, xChunkStart, zChunkStart, noiseSettings, BeardifierMarker.INSTANCE, this.settings.value(), this.globalFluidPicker, Blender.empty());
-//            noiseChunk.initializeForFirstCellX();
-//            noiseChunk.advanceCellX(0);
-//
-//            for (int yChunkIndex = upperChunks - 1; yChunkIndex >= 0; --yChunkIndex) {
-//                noiseChunk.selectCellYZ(yChunkIndex, 0);
-//
-//                for (int chunkY = cellHeight - 1; chunkY >= 0; --chunkY) {
-//                    int y = (underChunks + yChunkIndex) * cellHeight + chunkY;
-//                    double f = (double) chunkY / (double) cellHeight;
-//                    noiseChunk.updateForY(y, f);
-//                    noiseChunk.updateForX(x, d);
-//                    noiseChunk.updateForZ(z, e);
-//                    BlockState blockState = ((NoiseChunkAccessor) noiseChunk).invokeGetInterpolatedState();
-//                    BlockState blockState2 = blockState == null ? this.settings.value().defaultBlock() : blockState;
-//
-//                    if (stoppingState != null && stoppingState.test(blockState2)) {
-//                        noiseChunk.stopInterpolation();
-//                        return OptionalInt.of(y + 1);
-//                    }
-//                }
-//            }
-//
-//            noiseChunk.stopInterpolation();
-//        }
-//        return OptionalInt.empty();
-//    }
 
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, RandomState random, StructureManager structureManager, ChunkAccess chunk) {
@@ -235,13 +186,13 @@ public class SkylandChunkGenerator extends ChunkGenerator {
                                 }
 
                                 if (blockState != AIR && !SharedConstants.debugVoidTerrain(chunk.getPos())) {
-                                    levelChunkSection.setBlockState(y, u, ab, blockState, false);
-                                    heightmap.update(y, t, ab, blockState);
-                                    heightmap2.update(y, t, ab, blockState);
-                                    if (aquifer.shouldScheduleFluidUpdate() && !blockState.getFluidState().isEmpty()) {
-                                        mutableBlockPos.set(x, t, aa);
-                                        chunk.markPosForPostprocessing(mutableBlockPos);
-                                    }
+//                                    levelChunkSection.setBlockState(y, u, ab, blockState, false);
+//                                    heightmap.update(y, t, ab, blockState);
+//                                    heightmap2.update(y, t, ab, blockState);
+//                                    if (aquifer.shouldScheduleFluidUpdate() && !blockState.getFluidState().isEmpty()) {
+//                                        mutableBlockPos.set(x, t, aa);
+//                                        chunk.markPosForPostprocessing(mutableBlockPos);
+//                                    }
                                 }
                             }
                         }
