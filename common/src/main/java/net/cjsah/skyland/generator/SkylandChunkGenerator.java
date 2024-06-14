@@ -2,6 +2,8 @@ package net.cjsah.skyland.generator;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.ObjectList;
+import it.unimi.dsi.fastutil.objects.ObjectLists;
 import net.cjsah.skyland.mixin.NoiseChunkAccessor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -26,6 +28,7 @@ import net.minecraft.world.level.levelgen.NoiseChunk;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
+import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -73,19 +76,25 @@ public class SkylandChunkGenerator extends ChunkGenerator {
     @Override
     public CompletableFuture<ChunkAccess> createBiomes(Executor executor, RandomState randomState, Blender blender, StructureManager structureManager, ChunkAccess chunk) {
         return CompletableFuture.supplyAsync(Util.wrapThreadWithTaskName("init_biomes", () -> {
-            this.doCreateBiomes(blender, randomState, structureManager, chunk);
+            this.doCreateBiomes(blender, randomState, chunk);
             return chunk;
         }), Util.backgroundExecutor());
     }
 
-    private void doCreateBiomes(Blender blender, RandomState random, StructureManager structureManager, ChunkAccess chunk) {
-        NoiseChunk noiseChunk = chunk.getOrCreateNoiseChunk((chunkAccess) -> this.  createNoiseChunk(chunkAccess, structureManager, blender, random));
+    private void doCreateBiomes(Blender blender, RandomState random, ChunkAccess chunk) {
+        NoiseChunk noiseChunk = chunk.getOrCreateNoiseChunk((chunkAccess) -> this.  createNoiseChunk(chunkAccess, blender, random));
         BiomeResolver biomeResolver = BelowZeroRetrogen.getBiomeResolver(blender.getBiomeResolver(this.biomeSource), chunk);
         chunk.fillBiomesFromNoise(biomeResolver, ((NoiseChunkAccessor) noiseChunk).invokeCachedClimateSampler(random.router(), this.settings.value().spawnTarget()));
     }
 
-    private NoiseChunk createNoiseChunk(ChunkAccess chunk, StructureManager structureManager, Blender blender, RandomState random) {
-        return NoiseChunk.forChunk(chunk, random, Beardifier.forStructuresInChunk(structureManager, chunk.getPos()), this.settings.value(), this.globalFluidPicker, blender);
+    private NoiseChunk createNoiseChunk(ChunkAccess chunk, Blender blender, RandomState random) {
+        return NoiseChunk.forChunk(chunk, random, forStructuresInChunk(), this.settings.value(), this.globalFluidPicker, blender);
+    }
+
+    public static Beardifier forStructuresInChunk() {
+        ObjectList<Beardifier.Rigid> rigids = ObjectLists.emptyList();
+        ObjectList<JigsawJunction> junctions = ObjectLists.emptyList();
+        return new Beardifier(rigids.iterator(), junctions.iterator());
     }
 
     @Override
