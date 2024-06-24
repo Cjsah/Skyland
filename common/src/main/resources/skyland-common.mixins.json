@@ -10,13 +10,10 @@
     "FeatureMixin",
     "NoiseChunkAccessor",
     "RegisterChunkGeneratorMixin",
-    "RuinedPortalPieceMixin",
     "StrongholdPortalRoomMixin",
     "StructPlaceBlockMixin",
-    "StructurePieceMixin",
     "StructureStartMixin",
-    "TemplateStructurePieceAccessor",
-    "TemplateStructurePieceMixin"
+    "TemplateStructurePieceAccessor"
   ],
   "client": [
   ],

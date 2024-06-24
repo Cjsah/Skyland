@@ -27,6 +27,8 @@ public class StructureStartMixin {
             for (ClassMatcher matcher : Config.PassedStructures) {
                 if (matcher.match(instance.getClass(), ((TemplateStructurePieceAccessor)piece).getTemplateName())) {
                     instance.postProcess(level, structureManager, chunkGenerator, randomSource, boundingBox, chunkPos, pos);
+                } else {
+                    System.out.println(piece);
                 }
             }
         }
