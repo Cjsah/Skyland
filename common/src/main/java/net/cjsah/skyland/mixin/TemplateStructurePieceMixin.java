@@ -5,6 +5,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.structures.EndCityPieces;
+import net.minecraft.world.level.levelgen.structure.structures.RuinedPortalPiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import org.spongepowered.asm.mixin.Final;
@@ -21,6 +22,8 @@ public abstract class TemplateStructurePieceMixin {
     @Redirect(method = "postProcess", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;placeInWorld(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;Lnet/minecraft/util/RandomSource;I)Z"))
     private boolean placeInWord(StructureTemplate instance, ServerLevelAccessor accessor, BlockPos pos, BlockPos pos2, StructurePlaceSettings settings, RandomSource randomSource, int val) {
         if ((Object)this instanceof EndCityPieces.EndCityPiece && !"ship".equals(this.templateName)) {
+            return false;
+        }else if ((Object)this instanceof RuinedPortalPiece) {
             return false;
         }
         return instance.placeInWorld(accessor, pos, pos2, settings, randomSource, val);
