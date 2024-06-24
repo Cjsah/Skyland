@@ -4,13 +4,18 @@
   "package": "net.cjsah.skyland.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ChunkMapMixin",
     "EndCityStructureMixin",
+    "EndPodiumFeatureMixin",
+    "FeatureMixin",
     "NoiseChunkAccessor",
     "RegisterChunkGeneratorMixin",
     "RuinedPortalPieceMixin",
     "StrongholdPortalRoomMixin",
     "StructPlaceBlockMixin",
     "StructurePieceMixin",
+    "StructureStartMixin",
+    "TemplateStructurePieceAccessor",
     "TemplateStructurePieceMixin"
   ],
   "client": [

@@ -58,6 +58,10 @@ public class SkylandChunkGenerator extends ChunkGenerator {
         return CODEC;
     }
 
+    public Holder<NoiseGeneratorSettings> getSettings() {
+        return this.settings;
+    }
+
     @Override
     public int getGenDepth() {
         return this.settings.value().noiseSettings().height();
