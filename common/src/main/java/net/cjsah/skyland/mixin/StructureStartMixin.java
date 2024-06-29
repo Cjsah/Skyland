@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.structures.StrongholdPieces;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -27,10 +28,11 @@ public class StructureStartMixin {
             for (ClassMatcher matcher : Config.PassedStructures) {
                 if (matcher.match(instance.getClass(), ((TemplateStructurePieceAccessor)piece).getTemplateName())) {
                     instance.postProcess(level, structureManager, chunkGenerator, randomSource, boundingBox, chunkPos, pos);
-                } else {
-                    System.out.println(piece);
+                    break;
                 }
             }
+        } else if (instance instanceof StrongholdPieces.PortalRoom) {
+            instance.postProcess(level, structureManager, chunkGenerator, randomSource, boundingBox, chunkPos, pos);
         }
     }
 }
