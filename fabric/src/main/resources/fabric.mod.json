@@ -2,15 +2,14 @@
   "schemaVersion": 1,
   "id": "anvilcraft_skyland",
   "version": "${version}",
-
   "name": "Skyland",
   "description": "",
-  "authors": ["Cjsah"],
+  "authors": [
+    "Cjsah"
+  ],
   "contact": {},
-
   "license": "GNU LGPL 3.0",
   "icon": "assets/anvilcraft_skyland/textures/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -25,5 +24,14 @@
     "fabricloader": ">=0.15.11",
     "minecraft": ">=1.20.1",
     "anvillib": ">=1.0.0"
+  },
+  "custom": {
+    "anvillib": {
+      "integrations": {
+        "anvilcraft": [
+          "net.cjsah.skyland.integration.anvilcraft.AnvilcraftIntegration"
+        ]
+      }
+    }
   }
 }

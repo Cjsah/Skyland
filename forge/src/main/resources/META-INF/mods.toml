@@ -27,7 +27,7 @@ displayName="Skyland" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="http://example.com/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="assets/skyland/textures/icon.png" #optional
+logoFile="assets/anvilcraft_skyland/textures/icon.png" #optional
 # A text field displayed in the mod UI
 #credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI
@@ -44,6 +44,10 @@ logoFile="assets/skyland/textures/icon.png" #optional
 description='''
 
 '''
+
+[modproperties.anvilcraft.anvillib.integrations]
+anvilcraft = ["net.cjsah.skyland.integration.anvilcraft.AnvilcraftIntegration"]
+
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.anvilcraft_skyland]] #optional
    # the modid of the dependency
