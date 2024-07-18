@@ -3,8 +3,8 @@
 ## 一、初始平台
 
 > `3*1*3`基岩、`3*2*3`泥土、上表面中间`1`个竹笋、正中`1`个紫水晶母岩
-> ![land](./docs/land.png)
-> ![land layer](./docs/land_layer.png)
+* ![land](./docs/land.png)
+* ![land layer](./docs/land_layer.png)
 
 ## 二、新特性
 

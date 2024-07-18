@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "skyland",
+  "id": "anvilcraft_skyland",
   "version": "${version}",
 
   "name": "Skyland",
@@ -9,7 +9,7 @@
   "contact": {},
 
   "license": "GNU LGPL 3.0",
-  "icon": "assets/skyland/textures/icon.png",
+  "icon": "assets/anvilcraft_skyland/textures/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -18,11 +18,12 @@
     ]
   },
   "mixins": [
-    "skyland.mixins.json",
-    "skyland-common.mixins.json"
+    "anvilcraft_skyland.mixins.json",
+    "anvilcraft_skyland-common.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.15.11",
-    "minecraft": ">=1.20.1"
+    "minecraft": ">=1.20.1",
+    "anvillib": ">=1.0.0"
   }
 }

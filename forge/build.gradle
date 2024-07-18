@@ -20,13 +20,45 @@ configurations {
     developmentForge.extendsFrom common
 }
 
+repositories {
+    maven {
+        name 'cjsah maven'
+        url 'https://server.cjsah.net:1002/maven/'
+    }
+    maven { url = "https://maven.shedaniel.me/" }
+    maven { url = "https://maven.theillusivec4.top/" } // Curios
+    maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
+    maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
+    maven { // TOP
+        url "https://maven.k-4u.nl"
+    }
+    maven {
+        // saps.dev Maven (KubeJS and Rhino)
+        url = "https://maven.saps.dev/minecraft"
+        content {
+            includeGroup "dev.latvian.mods"
+        }
+    }
+    maven { url 'https://jitpack.io' } // Mixin Extras, Fabric ASM
+    maven { // Create Forge and Registrate Forge
+        url = "https://maven.tterrag.com/"
+        content {
+            includeGroup("com.simibubi.create")
+        }
+    }
+}
+
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
-    modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
+    // modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+
+    modImplementation("dev.anvilcraft.lib:anvillib-forge-1.20.1:${rootProject.anvil_lib_version}")
+    include "dev.anvilcraft.lib:anvillib-forge-1.20.1:${rootProject.anvil_lib_version}"
+    modImplementation("dev.dubhe:anvilcraft-forge-1.20.1:${rootProject.anvilcraft_version}")
 }
 
 processResources {

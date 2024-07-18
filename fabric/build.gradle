@@ -31,22 +31,41 @@ repositories {
             includeGroup 'curse.maven'
         }
     }
+    maven {
+        name 'cjsah maven'
+        url 'https://server.cjsah.net:1002/maven/'
+    }
+    maven { url = "https://mvn.devos.one/snapshots/" }
+    // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
+    // maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
+    maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+    maven { url = "https://maven.saps.dev/minecraft" } // saps.dev Maven (KubeJS and Rhino)
+    maven { // Reach Entity Attributes
+        url = "https://maven.jamieswhiteshirt.com/libs-release"
+        content { includeGroup("com.jamieswhiteshirt") }
+    }
+
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // Forge Config API Port
+    maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
 }
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
     // Remove the next line if you don't want to depend on the API
-    modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
+    // modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
     modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
 
-    modImplementation "fi.dy.masa.malilib:malilib-fabric-${rootProject.minecraft_version}:0.16.2"
-    modImplementation "curse.maven:minihud-244260:4593082"
-
+    modRuntimeOnly "fi.dy.masa.malilib:malilib-fabric-${rootProject.minecraft_version}:0.16.2"
+    modRuntimeOnly "curse.maven:minihud-244260:4593082"
+    modImplementation("dev.anvilcraft.lib:anvillib-fabric-1.20.1:${rootProject.anvil_lib_version}")
+    include "dev.anvilcraft.lib:anvillib-fabric-1.20.1:${rootProject.anvil_lib_version}"
+    modImplementation("dev.dubhe:anvilcraft-fabric-1.20.1:${rootProject.anvilcraft_version}")
 }
 
 processResources {

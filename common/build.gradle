@@ -2,12 +2,35 @@ architectury {
     common(rootProject.enabled_platforms.split(","))
 }
 
+repositories {
+    maven {
+        name 'cjsah maven'
+        url 'https://server.cjsah.net:1002/maven/'
+    }
+    maven { url = "https://mvn.devos.one/snapshots/" }
+    // Create Fabric, Porting Lib, Forge Tags, Milk Lib, Registrate Fabric
+    // maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
+    maven { url = "https://jitpack.io/" } // Mixin Extras, Fabric ASM
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+    maven { url = "https://maven.saps.dev/minecraft" } // saps.dev Maven (KubeJS and Rhino)
+    maven { // Reach Entity Attributes
+        url = "https://maven.jamieswhiteshirt.com/libs-release"
+        content { includeGroup("com.jamieswhiteshirt") }
+    }
+
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // Forge Config API Port
+    maven { url = "https://maven.cafeteria.dev/releases" } // Fake Player API
+}
+
 dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     // Remove the next line if you don't want to depend on the API
-    modApi "dev.architectury:architectury:${rootProject.architectury_version}"
+    // modApi "dev.architectury:architectury:${rootProject.architectury_version}"
+
+    modImplementation("dev.anvilcraft.lib:anvillib-fabric-1.20.1:${rootProject.anvil_lib_version}")
+    modImplementation("dev.dubhe:anvilcraft-fabric-1.20.1:${rootProject.anvilcraft_version}")
 }
 
 publishing {
