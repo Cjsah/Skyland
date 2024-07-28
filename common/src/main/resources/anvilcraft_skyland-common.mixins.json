@@ -20,6 +20,7 @@
     "integration.anvilcraft.AnvilCraft_HoeItemMixin"
   ],
   "client": [
+    "WorldOpenFlowsMixin"
   ],
   "plugin": "net.cjsah.skyland.mixin.plugin.SkylandMixinPlugin",
   "injectors": {
