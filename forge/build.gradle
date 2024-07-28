@@ -2,9 +2,26 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 loom {
+    accessWidenerPath = file("src/main/resources/anvilcraft_skyland.accesswidener")
     forge {
         mixinConfig "anvilcraft_skyland-common.mixins.json"
         mixinConfig "anvilcraft_skyland.mixins.json"
+    }
+    runs {
+        create("gameTestServer") {
+            server()
+            name("Minecraft Game Test")
+            source("main")
+
+            property("forge.enabledGameTestNamespaces", mod_id)
+            property("forge.gameTestServer", "true")
+
+            mods {
+                create(mod_id) {
+                    sourceSet("main")
+                }
+            }
+        }
     }
 }
 architectury {

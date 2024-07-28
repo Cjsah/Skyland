@@ -7,6 +7,25 @@ architectury {
     fabric()
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/anvilcraft_skyland.accesswidener")
+
+    runs {
+        client {
+            programArgs("--username", "Player")
+        }
+        create("gameTestServer") {
+            server()
+            name("Minecraft Game Test")
+            source("main")
+
+            property("fabric-api.gametest", "true")
+            property("fabric-api.gametest.command", "true")
+        }
+
+    }
+}
+
 configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.

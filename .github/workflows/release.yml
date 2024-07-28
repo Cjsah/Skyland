@@ -54,7 +54,6 @@ jobs:
           path: |
             fabric/build/libs/${{ steps.properties.outputs.mod_id }}-fabric-${{ steps.version.outputs.version }}.jar
             forge/build/libs/${{ steps.properties.outputs.mod_id }}-forge-${{ steps.version.outputs.version }}.jar
-            neoforge/build/libs/${{ steps.properties.outputs.mod_id }}-neoforge-${{ steps.version.outputs.version }}.jar
 
       - name: Upload Release Jar
         uses: softprops/action-gh-release@v0.1.15
@@ -62,7 +61,6 @@ jobs:
           files: |
             fabric/build/libs/${{ steps.properties.outputs.mod_id }}-fabric-${{ steps.version.outputs.version }}.jar
             forge/build/libs/${{ steps.properties.outputs.mod_id }}-forge-${{ steps.version.outputs.version }}.jar
-            neoforge/build/libs/${{ steps.properties.outputs.mod_id }}-neoforge-${{ steps.version.outputs.version }}.jar
 
       - name: Publish to maven
         run: ./gradlew publish

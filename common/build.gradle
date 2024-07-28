@@ -2,10 +2,6 @@ architectury {
     common(rootProject.enabled_platforms.split(","))
 }
 
-loom {
-    accessWidenerPath = file("src/main/resources/anvilcraft_skyland.accesswidener")
-}
-
 repositories {
     maven {
         name 'cjsah maven'

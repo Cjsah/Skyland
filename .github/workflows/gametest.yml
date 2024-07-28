@@ -36,6 +36,3 @@ jobs:
 
       - name: Run Forge GameTest
         run: ./gradlew ${{ steps.properties.outputs.mod_id }}-forge:runGameTestServer
-
-      - name: Run NeoForge GameTest
-        run: ./gradlew ${{ steps.properties.outputs.mod_id }}-neoforge:runGameTestServer
