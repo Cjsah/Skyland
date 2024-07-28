@@ -7,8 +7,10 @@ architectury {
     fabric()
 }
 
+def common_project = project(":common")
+
 loom {
-    accessWidenerPath = file("src/main/resources/anvilcraft_skyland.accesswidener")
+    accessWidenerPath = common_project.file("src/main/resources/anvilcraft_skyland.accesswidener")
 
     runs {
         client {
