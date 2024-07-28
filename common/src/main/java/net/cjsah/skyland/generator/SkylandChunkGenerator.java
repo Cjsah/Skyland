@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectLists;
+import lombok.Getter;
 import net.cjsah.skyland.Skyland;
 import net.cjsah.skyland.event.SkylandChunkGenerateEvent;
 import net.cjsah.skyland.mixin.NoiseChunkAccessor;
@@ -46,6 +47,7 @@ public class SkylandChunkGenerator extends ChunkGenerator {
     );
     private static final BlockState AIR = Blocks.AIR.defaultBlockState();
 
+    @Getter
     private final Holder<NoiseGeneratorSettings> settings;
     private final Aquifer.FluidPicker globalFluidPicker;
 
@@ -59,10 +61,6 @@ public class SkylandChunkGenerator extends ChunkGenerator {
     @Override
     protected @NotNull Codec<? extends ChunkGenerator> codec() {
         return CODEC;
-    }
-
-    public Holder<NoiseGeneratorSettings> getSettings() {
-        return this.settings;
     }
 
     @Override
