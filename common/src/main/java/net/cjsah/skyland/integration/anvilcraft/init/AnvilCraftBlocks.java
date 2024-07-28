@@ -1,5 +1,6 @@
 package net.cjsah.skyland.integration.anvilcraft.init;
 
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.cjsah.skyland.Skyland;
 import net.cjsah.skyland.integration.anvilcraft.block.StoneAnvilBlock;
 import net.minecraft.core.Registry;
@@ -11,14 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AnvilCraftBlocks {
-    private static final Map<String, Block> BLOCK_MAP = new HashMap<>();
+    protected static final Map<String, Block> BLOCK_MAP = new HashMap<>();
 
     public static final StoneAnvilBlock STONE_ANVIL = register("stone_anvil", new StoneAnvilBlock(BlockBehaviour.Properties.of()));
 
+    @ExpectPlatform
     public static void register() {
-        for (Map.Entry<String, Block> entry : AnvilCraftBlocks.BLOCK_MAP.entrySet()) {
-            Registry.register(BuiltInRegistries.BLOCK, Skyland.of(entry.getKey()), entry.getValue());
-        }
+        throw new AssertionError();
     }
 
     @SuppressWarnings("SameParameterValue")

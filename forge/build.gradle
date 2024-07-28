@@ -3,8 +3,8 @@ plugins {
 }
 loom {
     forge {
-        mixinConfig "skyland-common.mixins.json"
-        mixinConfig "skyland.mixins.json"
+        mixinConfig "anvilcraft_skyland-common.mixins.json"
+        mixinConfig "anvilcraft_skyland.mixins.json"
     }
 }
 architectury {
@@ -52,9 +52,9 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     // modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
-
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    // Mixin Extras
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.0-beta.2"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:0.4.0-beta.2"))
 
     modImplementation("dev.anvilcraft.lib:anvillib-forge-1.20.1:${rootProject.anvil_lib_version}")
     include "dev.anvilcraft.lib:anvillib-forge-1.20.1:${rootProject.anvil_lib_version}"

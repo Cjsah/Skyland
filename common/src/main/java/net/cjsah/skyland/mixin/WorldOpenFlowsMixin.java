@@ -16,7 +16,7 @@ public class WorldOpenFlowsMixin {
     private boolean removeAdviceOnLoad(boolean original) {
         return false;
     }
-    
+
     @ModifyVariable(
         method = "confirmWorldCreation",
         at = @At("HEAD"),

@@ -6,7 +6,7 @@ import net.minecraft.world.level.levelgen.structure.structures.StrongholdPieces;
 
 import java.util.List;
 
-public class Config {
+public class PassedStructuresConfig {
     public static final List<ClassMatcher> PassedStructures;
 
     static {

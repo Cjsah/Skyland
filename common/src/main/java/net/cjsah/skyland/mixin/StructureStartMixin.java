@@ -1,6 +1,6 @@
 package net.cjsah.skyland.mixin;
 
-import net.cjsah.skyland.Config;
+import net.cjsah.skyland.PassedStructuresConfig;
 import net.cjsah.skyland.util.ClassMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -25,7 +25,7 @@ public class StructureStartMixin {
     )
     private void blockFeature(StructurePiece instance, WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource randomSource, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos pos) {
         if (instance instanceof TemplateStructurePiece piece) {
-            for (ClassMatcher matcher : Config.PassedStructures) {
+            for (ClassMatcher matcher : PassedStructuresConfig.PassedStructures) {
                 if (matcher.match(instance.getClass(), ((TemplateStructurePieceAccessor)piece).getTemplateName())) {
                     instance.postProcess(level, structureManager, chunkGenerator, randomSource, boundingBox, chunkPos, pos);
                     break;
