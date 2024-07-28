@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.storage.LevelData;
 import org.jetbrains.annotations.NotNull;
 
 public class SkylandChunkGenerateEventListener {
@@ -14,12 +15,15 @@ public class SkylandChunkGenerateEventListener {
     @SubscribeEvent
     public void generate(@NotNull SkylandChunkGenerateEvent event) {
         WorldGenRegion level = event.getLevel();
-        ChunkPos pos = event.getChunk().getPos();
-        if (pos.x != 0 || pos.z != 0) return;
         ServerLevel serverLevel = event.getLevel().getLevel();
         if (serverLevel.dimension() != ServerLevel.OVERWORLD) return;
         BlockPos spawnPos = new BlockPos(8, 64, 8);
-        serverLevel.setDefaultSpawnPos(spawnPos, 0.0f);
+        LevelData levelData = level.getLevelData();
+        ChunkPos pos = event.getChunk().getPos();
+        if (pos.x == levelData.getXSpawn() && pos.z == levelData.getYSpawn()) {
+            serverLevel.setDefaultSpawnPos(spawnPos, 0.0f);
+        }
+        if (pos.x != 0 || pos.z != 0) return;
         LandFeature.place(level, spawnPos);
     }
 }

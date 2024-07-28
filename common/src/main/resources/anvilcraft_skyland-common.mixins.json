@@ -13,10 +13,15 @@
     "StrongholdPortalRoomMixin",
     "StructPlaceBlockMixin",
     "StructureStartMixin",
-    "TemplateStructurePieceAccessor"
+    "TemplateStructurePieceAccessor",
+    "integration.anvilcraft.AnvilCraft_AxeItemMixin",
+    "integration.anvilcraft.AnvilCraft_BlockMixin",
+    "integration.anvilcraft.AnvilCraft_FallingBlockEntityMixin",
+    "integration.anvilcraft.AnvilCraft_HoeItemMixin"
   ],
   "client": [
   ],
+  "plugin": "net.cjsah.skyland.mixin.plugin.SkylandMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }

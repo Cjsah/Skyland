@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "anvilcraft_skyland:pebble"
+    },
+    "X": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "pattern": [
+    "XXX",
+    " # ",
+    "###"
+  ],
+  "result": {
+    "item": "anvilcraft_skyland:stone_anvil"
+  },
+  "show_notification": true
+}
