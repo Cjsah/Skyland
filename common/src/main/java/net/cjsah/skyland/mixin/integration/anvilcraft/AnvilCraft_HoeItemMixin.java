@@ -33,7 +33,7 @@ abstract class AnvilCraft_HoeItemMixin {
         Vec3 pos = arg.getClickedPos().above().getCenter();
         Level level = arg.getLevel();
         RandomSource random = level.random;
-        if (!level.isClientSide() && random.nextFloat() > 0.7) {
+        if (!level.isClientSide() && random.nextFloat() < 0.7) {
             ItemStack stack = new ItemStack(AnvilCraftItems.PEBBLE, 1);
             ItemEntity entity = new ItemEntity(level, pos.x, pos.y, pos.z, stack);
             level.addFreshEntity(entity);

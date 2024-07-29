@@ -34,7 +34,7 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    archivesBaseName = rootProject.archives_base_name
+    archivesBaseName = "${project.name}-${minecraft_version}"
     group = rootProject.maven_group
 
     String buildType = 'build'

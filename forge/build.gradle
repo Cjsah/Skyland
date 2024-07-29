@@ -1,7 +1,7 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
-def common_project = project(":common")
+def common_project = project(":${mod_id}-common")
 
 loom {
     accessWidenerPath = common_project.file("src/main/resources/anvilcraft_skyland.accesswidener")
@@ -73,8 +73,8 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     // Remove the next line if you don't want to depend on the API
     // modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    common(project(path: ":${mod_id}-common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":${mod_id}-common", configuration: "transformProductionForge")) { transitive = false }
     // Mixin Extras
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.0-beta.2"))
     implementation(include("io.github.llamalad7:mixinextras-forge:0.4.0-beta.2"))
@@ -110,7 +110,7 @@ jar {
 }
 
 sourcesJar {
-    def commonSources = project(":common").sourcesJar
+    def commonSources = project(":${mod_id}-common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
 }

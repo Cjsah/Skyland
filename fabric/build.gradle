@@ -7,7 +7,7 @@ architectury {
     fabric()
 }
 
-def common_project = project(":common")
+def common_project = project(":${mod_id}-common")
 
 loom {
     accessWidenerPath = common_project.file("src/main/resources/anvilcraft_skyland.accesswidener")
@@ -77,8 +77,8 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     // modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    common(project(path: ":${mod_id}-common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":${mod_id}-common", configuration: "transformProductionFabric")) { transitive false }
 
     modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
 
@@ -114,7 +114,7 @@ jar {
 }
 
 sourcesJar {
-    def commonSources = project(":common").sourcesJar
+    def commonSources = project(":${mod_id}-common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
 }
