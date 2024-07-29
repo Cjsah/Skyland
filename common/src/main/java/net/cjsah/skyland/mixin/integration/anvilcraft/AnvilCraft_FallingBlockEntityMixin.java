@@ -4,7 +4,6 @@ import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.event.entity.AnvilFallOnLandEvent;
 import net.cjsah.skyland.integration.anvilcraft.init.AnvilCraftBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -25,11 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(FallingBlockEntity.class)
 abstract class AnvilCraft_FallingBlockEntityMixin extends Entity {
-    @Shadow
-    private float fallDamagePerDistance;
-
-    @Shadow
-    private int fallDamageMax;
 
     @Shadow
     private BlockState blockState;
@@ -51,10 +45,8 @@ abstract class AnvilCraft_FallingBlockEntityMixin extends Entity {
         )
     )
     public void damage(float f, float g, DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
-        int i = Mth.ceil(f - 1.0f);
-        float h = Math.min(Mth.floor((float) i * this.fallDamagePerDistance), this.fallDamageMax);
         boolean bl = this.blockState.is(AnvilCraftBlocks.STONE_ANVIL);
-        if (bl && h > 0.0f && this.random.nextFloat() < 0.667f) {
+        if (bl && this.random.nextFloat() < 0.667f) {
             this.cancelDrop = true;
         }
     }
