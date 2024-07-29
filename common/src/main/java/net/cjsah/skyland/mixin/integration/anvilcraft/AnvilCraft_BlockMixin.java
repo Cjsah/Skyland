@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -40,10 +42,15 @@ abstract class AnvilCraft_BlockMixin extends BlockBehaviour {
         @NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos,
         @NotNull RandomSource random
     ) {
-        if (level.getBrightness(LightLayer.SKY, pos) > 7) return;
+        if (level.getBrightness(LightLayer.SKY, pos.above()) > 7) return;
         Holder<Biome> biome = level.getBiome(pos);
         Biome value = biome.isBound() ? biome.value() : null;
-        if ((value == null || value.climateSettings.downfall() < 0.8) && !level.isRainingAt(pos)) return;
+        if (
+            (value == null || value.climateSettings.downfall() < 0.8)
+                && !this.anvilcraft_skyland$isRainingAt(level, pos)
+        ) {
+            return;
+        }
         Block block = null;
         for (Map.Entry<Block, Block> entry : AnvilcraftIntegration.MOSS_MAP.entrySet()) {
             if (!state.is(entry.getValue())) continue;
@@ -58,5 +65,15 @@ abstract class AnvilCraft_BlockMixin extends BlockBehaviour {
             }
         }
         level.setBlockAndUpdate(pos, blockState);
+    }
+
+    @Unique
+    private boolean anvilcraft_skyland$isRainingAt(@NotNull Level level, BlockPos blockPos) {
+        if (!level.isRaining()) {
+            return false;
+        } else {
+            Biome biome = level.getBiome(blockPos).value();
+            return biome.getPrecipitationAt(blockPos) == Biome.Precipitation.RAIN;
+        }
     }
 }
