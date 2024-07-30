@@ -1,6 +1,5 @@
 package net.cjsah.skyland.mixin.plugin;
 
-import dev.dubhe.anvilcraft.mixin.plugin.AnvilCraftMixinPlugin;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -13,7 +12,7 @@ public class SkylandMixinPlugin implements IMixinConfigPlugin {
 
     @SuppressWarnings("SameParameterValue")
     private boolean isLoaded(String clazz) {
-        return AnvilCraftMixinPlugin.class.getClassLoader().getResource(clazz) != null;
+        return SkylandMixinPlugin.class.getClassLoader().getResource(clazz) != null;
     }
 
     @Override
