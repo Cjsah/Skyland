@@ -28,7 +28,7 @@ public class SkylandMixinPlugin implements IMixinConfigPlugin {
     @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (!hasAnvilCraft && mixinClassName.startsWith("AnvilCraft_")) return false;
+        if (!hasAnvilCraft && mixinClassName.contains("AnvilCraft_")) return false;
         return true;
     }
 
