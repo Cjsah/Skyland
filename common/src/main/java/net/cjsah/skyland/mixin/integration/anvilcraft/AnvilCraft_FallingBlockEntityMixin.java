@@ -4,7 +4,6 @@ import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.event.entity.AnvilFallOnLandEvent;
 import net.cjsah.skyland.integration.anvilcraft.init.AnvilCraftBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -19,7 +18,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(FallingBlockEntity.class)

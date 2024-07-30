@@ -2,7 +2,6 @@ package net.cjsah.skyland.mixin.integration.anvilcraft;
 
 import dev.dubhe.anvilcraft.init.ModItems;
 import net.cjsah.skyland.integration.anvilcraft.init.AnvilCraftItems;
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
