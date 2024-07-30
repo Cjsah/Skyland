@@ -37,21 +37,6 @@ abstract class AnvilCraft_FallingBlockEntityMixin extends Entity {
         super(entityType, level);
     }
 
-    @Inject(
-        method = "causeFallDamage",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z"
-        )
-    )
-    public void damage(float f, float g, DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
-        boolean bl = this.blockState.is(AnvilCraftBlocks.STONE_ANVIL);
-        if (bl && this.random.nextFloat() < 0.667f) {
-            this.cancelDrop = true;
-        }
-    }
-
-
     @SuppressWarnings("resource")
     @Inject(
         method = "tick",
@@ -83,7 +68,7 @@ abstract class AnvilCraft_FallingBlockEntityMixin extends Entity {
         AnvilFallOnLandEvent event = new AnvilFallOnLandEvent(this.level(), blockPos, (FallingBlockEntity) (Object) this, anvilcraft_skyland$fallDistance);
         AnvilCraft.EVENT_BUS.post(event);
         boolean isAnvilDamage = event.isAnvilDamage();
-        if (isAnvilDamage) {
+        if (isAnvilDamage || this.random.nextFloat() < 0.667f) {
             BlockState state = AnvilBlock.damage(this.blockState);
             if (state != null) this.level().setBlockAndUpdate(blockPos, state);
             else {
