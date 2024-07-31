@@ -9,6 +9,7 @@
     "EndCityStructureMixin",
     "EndPodiumFeatureMixin",
     "FeatureMixin",
+    "MinecraftServerMixin",
     "NoiseChunkAccessor",
     "RegisterChunkGeneratorMixin",
     "TestCommandMixin",
