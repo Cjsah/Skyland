@@ -5,7 +5,6 @@ import dev.anvilcraft.lib.integration.Integration;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.dubhe.anvilcraft.api.registry.AnvilCraftRegistrate;
 import net.cjsah.skyland.Skyland;
-import net.cjsah.skyland.integration.anvilcraft.event.SkylandChunkGenerateEventListener;
 import net.cjsah.skyland.integration.anvilcraft.init.AnvilCraftBlocks;
 import net.cjsah.skyland.integration.anvilcraft.init.AnvilCraftItemGroups;
 import net.cjsah.skyland.integration.anvilcraft.init.AnvilCraftItems;
@@ -33,7 +32,6 @@ public class AnvilcraftIntegration implements Integration {
         AnvilCraftBlocks.register();
         AnvilCraftItems.register();
         AnvilCraftItemGroups.register();
-        Skyland.EVENT_BUS.register(new SkylandChunkGenerateEventListener());
         REGISTRATE.register();
         AnvilcraftIntegration.init();
     }

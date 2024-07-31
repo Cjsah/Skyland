@@ -7,19 +7,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public abstract class SkylandStructures {
     protected final StructurePiece piece;
-    protected Rotation rotation;
-    protected Mirror mirror;
+    protected final Rotation rotation;
+    protected final Mirror mirror;
 
     @SuppressWarnings("DataFlowIssue")
     public SkylandStructures(StructurePiece piece) {

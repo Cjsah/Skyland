@@ -1,10 +1,7 @@
 package net.cjsah.skyland.integration.anvilcraft.init;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.cjsah.skyland.Skyland;
 import net.cjsah.skyland.integration.anvilcraft.block.StoneAnvilBlock;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 

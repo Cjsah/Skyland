@@ -1,9 +1,6 @@
 package net.cjsah.skyland.integration.anvilcraft.init;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.cjsah.skyland.Skyland;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

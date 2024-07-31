@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectLists;
 import lombok.Getter;
 import net.cjsah.skyland.Skyland;
+import net.cjsah.skyland.SkylandConfig;
 import net.cjsah.skyland.event.SkylandChunkGenerateEvent;
 import net.cjsah.skyland.mixin.ChunkGeneratorAccessor;
 import net.cjsah.skyland.mixin.NoiseChunkAccessor;
@@ -47,8 +48,6 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
 import net.minecraft.world.level.levelgen.structure.structures.StrongholdStructure;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -68,7 +67,6 @@ public class SkylandChunkGenerator extends ChunkGenerator {
         ).apply(instance, instance.stable(SkylandChunkGenerator::new))
     );
     private static final BlockState AIR = Blocks.AIR.defaultBlockState();
-    private static final Logger log = LoggerFactory.getLogger(SkylandChunkGenerator.class);
 
     @Getter
     private final Holder<NoiseGeneratorSettings> settings;
@@ -217,7 +215,7 @@ public class SkylandChunkGenerator extends ChunkGenerator {
                         if (feature.feature().is(new ResourceLocation("end_gateway_return"))) {
                             level.setCurrentlyGenerating(supplier);
                             feature.placeWithBiomeCheck(level, this, random, blockPos);
-                        } else if (feature.feature().is(new ResourceLocation("end_spike"))) {
+                        } else if (SkylandConfig.genFirstEndSpike && feature.feature().is(new ResourceLocation("end_spike"))) {
                             level.setCurrentlyGenerating(supplier);
                             feature.placeWithBiomeCheck(level, this, random, blockPos);
                         }
