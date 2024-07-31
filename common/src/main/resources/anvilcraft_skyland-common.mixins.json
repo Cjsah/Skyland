@@ -6,8 +6,7 @@
   "mixins": [
     "ChunkGeneratorAccessor",
     "ChunkMapMixin",
-    "EndCityStructureMixin",
-    "EndPodiumFeatureMixin",
+    "EndDragonFightMixin",
     "MinecraftServerMixin",
     "NoiseChunkAccessor",
     "RegisterChunkGeneratorMixin",

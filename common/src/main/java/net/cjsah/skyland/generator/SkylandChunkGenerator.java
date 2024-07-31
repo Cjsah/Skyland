@@ -217,6 +217,9 @@ public class SkylandChunkGenerator extends ChunkGenerator {
                         if (feature.feature().is(new ResourceLocation("end_gateway_return"))) {
                             level.setCurrentlyGenerating(supplier);
                             feature.placeWithBiomeCheck(level, this, random, blockPos);
+                        } else if (feature.feature().is(new ResourceLocation("end_spike"))) {
+                            level.setCurrentlyGenerating(supplier);
+                            feature.placeWithBiomeCheck(level, this, random, blockPos);
                         }
                     } catch (Exception exception2) {
                         CrashReport crashReport2 = CrashReport.forThrowable(exception2, "Feature placement");
