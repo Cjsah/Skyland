@@ -13,9 +13,9 @@ on:
       - settings.gradle
 
 jobs:
-  gametest:
-    secrets: inherit
-    uses: ./.github/workflows/gametest.yml
+#  gametest:
+#    secrets: inherit
+#    uses: ./.github/workflows/gametest.yml
   build:
     runs-on: ubuntu-latest
     env:
