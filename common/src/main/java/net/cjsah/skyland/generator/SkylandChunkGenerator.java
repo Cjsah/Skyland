@@ -6,10 +6,7 @@ import it.unimi.dsi.fastutil.ints.IntArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectLists;
-import lombok.Getter;
-import net.cjsah.skyland.Skyland;
 import net.cjsah.skyland.SkylandConfig;
-import net.cjsah.skyland.event.SkylandChunkGenerateEvent;
 import net.cjsah.skyland.mixin.ChunkGeneratorAccessor;
 import net.cjsah.skyland.mixin.NoiseChunkAccessor;
 import net.minecraft.CrashReport;
@@ -68,7 +65,6 @@ public class SkylandChunkGenerator extends ChunkGenerator {
     );
     private static final BlockState AIR = Blocks.AIR.defaultBlockState();
 
-    @Getter
     private final Holder<NoiseGeneratorSettings> settings;
     private final Aquifer.FluidPicker globalFluidPicker;
 
@@ -77,6 +73,10 @@ public class SkylandChunkGenerator extends ChunkGenerator {
         this.settings = settings;
         Aquifer.FluidStatus air = new Aquifer.FluidStatus(0, AIR);
         this.globalFluidPicker = (x, y, z) -> air;
+    }
+
+    public Holder<NoiseGeneratorSettings> getSettings() {
+        return settings;
     }
 
     @Override
@@ -244,9 +244,7 @@ public class SkylandChunkGenerator extends ChunkGenerator {
     public void buildSurface(
         @NotNull WorldGenRegion level, @NotNull StructureManager structureManager, @NotNull RandomState random,
         @NotNull ChunkAccess chunk
-    ) {
-        Skyland.EVENT_BUS.post(new SkylandChunkGenerateEvent(level, structureManager, random, chunk));
-    }
+    ) {}
 
     @Override
     public void applyCarvers(
