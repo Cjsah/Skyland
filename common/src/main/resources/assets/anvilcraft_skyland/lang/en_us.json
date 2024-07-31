@@ -1,9 +1,9 @@
 {
   "generator.anvilcraft_skyland.skyland": "Skyland",
   "itemGroup.anvilcraft_skyland.anvilcraft_skyland": "Anvilcraft Skyland",
+  "data_pack.anvilcraft_skyland.description": "AnvilCraft Skyland Datapack",
   "block.anvilcraft_skyland.stone_anvil": "Stone Anvil",
   "item.anvilcraft_skyland.moss": "Moss",
   "item.anvilcraft_skyland.pebble": "Pebble",
-  "item.anvilcraft_skyland.bamboo_leaves": "Bamboo Leaves",
-  "data_pack.anvilcraft_skyland.description": "AnvilCraft Skyland Datapack"
+  "item.anvilcraft_skyland.bamboo_leaves": "Bamboo Leaves"
 }
