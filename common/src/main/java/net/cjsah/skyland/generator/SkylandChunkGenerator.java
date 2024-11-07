@@ -148,13 +148,11 @@ public class SkylandChunkGenerator extends ChunkGenerator {
         ChunkPos chunkPos = chunkAccess.getPos();
         SectionPos sectionPos = SectionPos.of(chunkPos, level.getMinSection());
         BlockPos blockPos = sectionPos.origin();
-
         Registry<Structure> structureRegistry = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
         Map<Integer, List<Structure>> stepMap = structureRegistry.stream().collect(Collectors.groupingBy(structure -> structure.step().ordinal()));
         List<FeatureSorter.StepFeatureData> steps = ((ChunkGeneratorAccessor)this).getFeaturesPerStep().get();
         WorldgenRandom random = new WorldgenRandom(new XoroshiroRandomSource(RandomSupport.generateUniqueSeed()));
         long seed = random.setDecorationSeed(level.getSeed(), blockPos.getX(), blockPos.getZ());
-
         Set<Holder<Biome>> biomes = new ObjectArraySet<>();
         ChunkPos.rangeClosed(sectionPos.chunk(), 1).forEach(pos -> {
             ChunkAccess chunk = level.getChunk(pos.x, pos.z);
@@ -232,7 +230,6 @@ public class SkylandChunkGenerator extends ChunkGenerator {
             crashReport3.addCategory("Generation").setDetail("CenterX", chunkPos.x).setDetail("CenterZ", chunkPos.z).setDetail("Seed", seed);
             throw new ReportedException(crashReport3);
         }
-
     }
 
     @Override
