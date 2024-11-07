@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(BambooSaplingBlock.class)
 public class BambooSaplingBlockMixin {
-    @Redirect( method = "isValidBonemealTarget",at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z",opcode = Opcodes.GETFIELD))
-    private boolean isAirOrBedrock( BlockState blockState ){
-        return blockState.equals( Blocks.AIR.defaultBlockState() ) || blockState.equals( Blocks.BEDROCK.defaultBlockState() );
+    @Redirect(method = "isValidBonemealTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;isAir()Z", opcode = Opcodes.GETFIELD))
+    private boolean isAirOrBedrock(BlockState blockState) {
+        return blockState.equals(Blocks.AIR.defaultBlockState()) || blockState.equals(Blocks.BEDROCK.defaultBlockState());
     }
 }
