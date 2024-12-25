@@ -1,5 +1,6 @@
 package net.cjsah.skyland.generator;
 
+import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
@@ -20,6 +21,7 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -140,7 +142,90 @@ public class SkylandChunkGenerator extends ChunkGenerator {
         @NotNull Executor executor, @NotNull Blender blender, @NotNull RandomState random,
         @NotNull StructureManager structureManager, @NotNull ChunkAccess chunk
     ) {
-        return CompletableFuture.completedFuture(chunk);
+        NoiseSettings noiseSettings = this.settings.value().noiseSettings().clampToHeightAccessor(chunk.getHeightAccessorForGeneration());
+        int minY = noiseSettings.minY();
+        int minCells = Mth.floorDiv(minY, noiseSettings.getCellHeight());
+        int totalCells = Mth.floorDiv(noiseSettings.height(), noiseSettings.getCellHeight());
+        if (totalCells <= 0) {
+            return CompletableFuture.completedFuture(chunk);
+        } else {
+            int top = chunk.getSectionIndex(totalCells * noiseSettings.getCellHeight() - 1 + minY);
+            int bottom = chunk.getSectionIndex(minY);
+            Set<LevelChunkSection> set = Sets.newHashSet();
+
+            for (int i = top; i >= bottom; --i) {
+                LevelChunkSection levelChunkSection = chunk.getSection(i);
+                levelChunkSection.acquire();
+                set.add(levelChunkSection);
+            }
+
+            return CompletableFuture
+                    .supplyAsync(Util.wrapThreadWithTaskName(
+                            "wgen_fill_noise",
+                            () -> this.fillBlocks(blender, random, chunk, minCells, totalCells)),
+                            Util.backgroundExecutor()
+                    ).whenCompleteAsync((argx, throwable) -> {
+                        for (LevelChunkSection levelChunkSection : set) {
+                            levelChunkSection.release();
+                        }
+                    }, executor);
+        }
+    }
+
+    private ChunkAccess fillBlocks(Blender blender, RandomState random, ChunkAccess chunk, int minCells, int totalCells) {
+        BlockState bedrock = Blocks.BEDROCK.defaultBlockState();
+        NoiseChunk noiseChunk = chunk.getOrCreateNoiseChunk(chunkX -> this.createNoiseChunk(chunkX, blender, random));
+        ChunkPos chunkPos = chunk.getPos();
+        Heightmap oceanHeightmap = chunk.getOrCreateHeightmapUnprimed(Heightmap.Types.OCEAN_FLOOR_WG);
+        Heightmap worldHeightmap = chunk.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
+        int chunkX = chunkPos.getMinBlockX();
+        int chunkZ = chunkPos.getMinBlockZ();
+        noiseChunk.initializeForFirstCellX();
+        int cellWidth = ((NoiseChunkAccessor) noiseChunk).invokeCellWidth();
+        int cellHeight = ((NoiseChunkAccessor) noiseChunk).invokeCellHeight();
+        int horizonCells = 16 / cellWidth;
+
+        for (int cellX = 0; cellX < horizonCells; cellX++) {
+            noiseChunk.advanceCellX(cellX);
+            for (int cellZ = 0; cellZ < horizonCells; cellZ++) {
+                int sectionIndex = chunk.getSectionsCount() - 1;
+                LevelChunkSection section = chunk.getSection(sectionIndex);
+                for (int cellY = totalCells - 1; cellY >= 0; --cellY) {
+                    noiseChunk.selectCellYZ(cellY, cellZ);
+                    for (int cellYIndex = cellHeight - 1; cellYIndex >= 0; --cellYIndex) {
+                        int y = (minCells + cellY) * cellHeight + cellYIndex;
+                        int yPos = y & 15;
+                        int index = chunk.getSectionIndex(y);
+                        if (sectionIndex != index) {
+                            sectionIndex = index;
+                            section = chunk.getSection(index);
+                        }
+                        double positionYInCell = (double) cellYIndex / (double) cellHeight;
+                        noiseChunk.updateForY(y, positionYInCell);
+
+                        for (int cellXIndex = 0; cellXIndex < cellWidth; cellXIndex++) {
+                            int x = chunkX + cellX * cellWidth + cellXIndex;
+                            int xPos = x & 15;
+                            double positionXInCell = (double) cellXIndex / (double) cellWidth;
+                            noiseChunk.updateForX(x, positionXInCell);
+
+                            for (int cellZIndex = 0; cellZIndex < cellWidth; cellZIndex++) {
+                                int z = chunkZ + cellZ * cellWidth + cellZIndex;
+                                int zPos = z & 15;
+                                double positionZInCell = (double) cellZIndex / (double) cellWidth;
+                                noiseChunk.updateForZ(z, positionZInCell);
+                                section.setBlockState(xPos, yPos, zPos, bedrock, false);
+                                oceanHeightmap.update(xPos, y, zPos, bedrock);
+                                worldHeightmap.update(xPos, y, zPos, bedrock);
+                            }
+                        }
+                    }
+                }
+            }
+            noiseChunk.swapSlices();
+        }
+        noiseChunk.stopInterpolation();
+        return chunk;
     }
 
     @Override
