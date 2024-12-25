@@ -1,9 +1,6 @@
 name: CI for Mod
 on:
   push:
-    branches:
-      - main
-      - releases/**
     paths:
       - common/**
       - fabric/**
